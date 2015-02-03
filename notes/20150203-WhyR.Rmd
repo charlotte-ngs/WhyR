@@ -10,7 +10,16 @@ output:
     mathjax: "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 ---
 
-Fast Prototyping` - stands for the fact that once you have an idea, it can be very quickly transformed into R-code. This is explained very nicely by Dirk Edelbuettel in a [Google Tech Talk](https://www.youtube.com/watch?v=UZkaZhsOfT4). In short, imaging you have a dataset, like the one on eruption times and waiting times of the Old Faithful geyser in Yellowstone National Park, and you want to draw a histogram of the eruption times. In R this is just one statement. 
+R has many advantages. There is a big and active community, there are a lot of packages available for a wide variety of statistical analyses, the two reasons why one should use R that I like most are
+
+1. Fast Protoyping and
+2. Good infrastructure for implementing literate programming approaches
+
+
+## Fast Prototyping
+Fast Prototyping` - stands for the fact that once you have an idea, it can be very quickly transformed into R-code. This is explained very nicely by Dirk Edelbuettel in a [Google Tech Talk](https://www.youtube.com/watch?v=UZkaZhsOfT4). 
+
+In short, imaging you have a dataset, like the one on eruption times and waiting times of the Old Faithful geyser in Yellowstone National Park, and you want to draw a histogram of the eruption times. In R this is just one statement. 
 
 ```{r, fig.show='asis'}
 hist(faithful$eruption)
@@ -38,7 +47,7 @@ polygon(c(fitDensity$x, rev(fitDensity$x)),
 lines(fitDensity)
 ```
 
-Let us have a moment here to appreciate what we just did. This is density fitting, drawing markov chain samples, computing quantiles of the samples and plotting everything in just seven statements. This example best shows what is really meant by fast prototyping.
+Let us have a moment here to appreciate what we just did. This is density fitting, drawing markov chain samples, computing quantiles of the samples and plotting everything in just seven statements. This example best shows what is really meant by `fast prototyping`.
 
 The following list briefly explains what the seven statements are doing. 
 
