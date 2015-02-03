@@ -1,0 +1,80 @@
+---
+title: "Why R"
+author: "Peter von Rohr"
+date: "3 Feb 2015"
+layout: post
+output:
+  html_document:
+    keep_md: no
+    theme: united
+    mathjax: "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+---
+
+Fast Prototyping` - stands for the fact that once you have an idea, it can be very quickly transformed into R-code. This is explained very nicely by Dirk Edelbuettel in a [Google Tech Talk](https://www.youtube.com/watch?v=UZkaZhsOfT4). In short, imaging you have a dataset, like the one on eruption times and waiting times of the Old Faithful geyser in Yellowstone National Park, and you want to draw a histogram of the eruption times. In R this is just one statement. 
+
+```{r, fig.show='asis'}
+hist(faithful$eruption)
+```
+
+Let us further assume that I want to draw markov chain samples from the empirical distribution and I want to show confidence levels of the drawn samples in a line-plot. And here it comes ...
+
+```{r, fig.show='asis'}
+vOfErTime <- faithful$eruptions
+### # density fit 
+fitDensity <- density(vOfErTime)
+### # markov chain samples
+fitMC <- replicate(10000, {
+  vSam <- sample(vOfErTime, replace = TRUE);
+  vSamDens <- density(vSam, from = min(fitDensity$x),
+                      to = max(fitDensity$x))$y
+})
+### # get quantiles based on samples
+fitQuant <- apply(fitMC, 1, 
+                  quantile, c(0.025, 0.975))
+plot(fitDensity, ylim = range(fitQuant), main = "Old Faithful Eruption Times")
+polygon(c(fitDensity$x, rev(fitDensity$x)),
+        c(fitQuant[1,], rev(fitQuant[2,])),
+        col = 'grey', border = FALSE)
+lines(fitDensity)
+```
+
+Let us have a moment here to appreciate what we just did. This is density fitting, drawing markov chain samples, computing quantiles of the samples and plotting everything in just seven statements. This example best shows what is really meant by fast prototyping.
+
+The following list briefly explains what the seven statements are doing. 
+
+```
+1. vOfErTime <- faithful$eruptions
+```
+just extracts the column with eruption times from the `faithful` dataframe into a vector called `vOfErTime`. 
+
+```
+2. fitDensity <- density(vOfErTime)
+```
+fits a density to the vector of eruption times using R's internal `density()` function. The help file `?density` gives the detail on how the fit is done. What is important to note here is that the function `density()` returns a list with components `x` and `y` which specify the fitted density.
+
+```
+3. fitMC <- replicate(10000, {
+  vSam <- sample(vOfErTime, replace = TRUE);
+  vSamDens <- density(vSam, from = min(fitDensity$x),
+                      to = max(fitDensity$x))$y
+})
+```
+The third statement samples markov chain (MC) replicates with replacements from the vector `vOfErTime`. The function `replicate()` is a wrapper to `sapply()` and all it does is replicating the expression given as the second argument as many times as specified by the first argument. In the above case the number of replications is 10000 and the expression to be replicated are two statements. First a sample with replacement is drawn from vector `vOfErTime` and second from this sample the density is computed and only the y-component of the density object is returned. The result of the whole statement is a matrix with 512 rows which corresponds to the length of y-component of the density object and with 10000 columns which is equal to the number of replicates. 
+
+```
+4. fitQuant <- apply(fitMC, 1, 
+                  quantile, c(0.025, 0.975))
+```
+Quantiles are computed using the `apply()` function on the result matrix from the third statement. The first argument to `apply()` is the data object to operate on which in our case is `fitMC`. The second argument to `apply()` specifies the dimension index where 1 means rows and 2 stands for columns. The third argument to `apply()` is the function to be used on the data object. The remaining arguments are additional arugments to the function specified as the third argument to `apply()`. 
+
+```
+5. plot(fitDensity, ylim = range(fitQuant), main = "Old Faithful Eruption Times")
+```
+opens a plotting device for the object `fitDensity` using the limit of the y-axis as specified by the range of the quantiles and the given main title of the plot.
+
+```
+6. polygon(c(fitDensity$x, rev(fitDensity$x)),
+        c(fitQuant[1,], rev(fitQuant[2,])),
+        col = 'grey', border = FALSE)
+```
+
