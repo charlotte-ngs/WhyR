@@ -2,7 +2,12 @@
 title: "Why R"
 author: "Peter von Rohr"
 date: "3 Feb 2015"
-output: html_document
+layout: post
+output:
+  html_document:
+    keep_md: no
+    theme: united
+    mathjax: "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 ---
 
 Fast Prototyping` - stands for the fact that once you have an idea, it can be very quickly transformed into R-code. This is explained very nicely by Dirk Edelbuettel in a [Google Tech Talk](https://www.youtube.com/watch?v=UZkaZhsOfT4). In short, imaging you have a dataset, like the one on eruption times and waiting times of the Old Faithful geyser in Yellowstone National Park, and you want to draw a histogram of the eruption times. In R this is just one statement. 
