@@ -86,4 +86,21 @@ opens a plotting device for the object `fitDensity` using the limit of the y-axi
         c(fitQuant[1,], rev(fitQuant[2,])),
         col = 'grey', border = FALSE)
 ```
+draws quantiles band around the density curve as a polygon. Because we have 512 points in both directions, the corners of the polygons are not really visible. The command `polygon()` accepts two vectors which define the vertices of the polygon to be drawn. 
 
+```
+7. lines(fitDensity)
+```
+adds the density curve to the plot. 
+
+
+## Literate Programming
+As already mentioned in a previous [post](http://charlotte-ngs.github.io/2015/01/09/BashScriptPOD) on how to use POD for documenting bash scripts, in literate programming, documents are written in natural language such as English intersperced with macros or snippets of code. Both description and the code is built from a single source and results of computations or graphics are shown directly after the code that generated those results.
+
+Besides being very good programming practise to document the programming code, documents built using literate programming approaches offer a great level of reproducitility.
+
+In R there are two different systems implementing a literate programming approach.
+
+1. `Sweave` provides a flexible framework for mixing text and R code for automated document generation. A single source file contains both text and R code which are used to build a single output document. The output document contains the text together with the R code and the output of the code. Sweave has a modular design where different drivers are used for building different markup languages. In the default setting the text is written in LaTeX and the R-code is placed within the source document using the `noweb` syntax. 
+
+2. `knitr` is an alternative tool to Sweave. Documentation and demos are available on the [knitr website](http://yihui.name/knitr). 
