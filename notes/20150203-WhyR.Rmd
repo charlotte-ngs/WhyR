@@ -8,6 +8,15 @@ output:
     keep_md: no
     theme: united
     mathjax: "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+references:
+- URL: "https://www.stat.uni-muenchen.de/~leisch/Sweave/Sweave-compstat2002.pdf"
+  author:
+  - family: Leisch
+    given: Friedrich
+  id: Leisch2002a
+  issued:
+    year: 2002
+  title: "Sweave: Dynamic Generation of Statistical Reports Using Literate Data Analysis"
 ---
 
 R has many advantages. There is a big and active community, there are a lot of packages available for a wide variety of statistical analyses, the two reasons why one should use R that I like most are
@@ -101,6 +110,9 @@ Besides being very good programming practise to document the programming code, d
 
 In R there are two different systems implementing a literate programming approach.
 
-1. `Sweave` provides a flexible framework for mixing text and R code for automated document generation. A single source file contains both text and R code which are used to build a single output document. The output document contains the text together with the R code and the output of the code. Sweave has a modular design where different drivers are used for building different markup languages. In the default setting the text is written in LaTeX and the R-code is placed within the source document using the `noweb` syntax. 
+1. `Sweave` provides a flexible framework for mixing text and R code for automated document generation. A single source file contains both text and R code which are used to build a single output document. The output document contains the text together with the R code and the output of the code. Sweave has a modular design where different drivers are used for building different markup languages. In the default setting the text is written in LaTeX and the R-code is placed within the source document using the `noweb` syntax. For further documentation, I refer to the [Sweave user manual](https://stat.ethz.ch/R-manual/R-devel/library/utils/doc/Sweave.pdf) and to [@Leisch2002a]
 
-2. `knitr` is an alternative tool to Sweave. Documentation and demos are available on the [knitr website](http://yihui.name/knitr). 
+2. `knitr` is an alternative tool to Sweave. Documentation and demos are available on the [knitr website](http://yihui.name/knitr). In the knitr manual the author states that it follows the steps of Sweave, but it was too difficult to extend, hence the fork into a new system. 
+
+
+## References
